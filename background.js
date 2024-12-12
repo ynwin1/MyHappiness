@@ -8,7 +8,7 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     let year = date.getFullYear();
 
     // Store the rating and comment in Chrome Storage
-    chrome.storage.local.set({ day, month, year, rating, comment})
+    chrome.storage.local.set({ day, month, year, rating, comment, lastSavedDate: date.toDateString()})
         .then(() => {
             console.log('Data saved:', {rating, comment});
             sendResponse({status: 'success'});
