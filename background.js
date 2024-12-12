@@ -3,14 +3,22 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
 
     // Get date
     const date = new Date();
-    let day = date.getDay();
-    let month = date.getMonth() + 1;  // Months are 0-indexed
-    let year = date.getFullYear();
+    const formattedDate = date.toISOString().split('T')[0];  // 'YYYY-MM-DD'
+
+    const data = {
+        rating: rating,
+        comment: comment,
+        lastSavedDate: date.toDateString()
+    };
+
+    const key = `rating_${formattedDate}`;
+    let storageObject = {};
+    storageObject[key] = data;
 
     // Store the rating and comment in Chrome Storage
-    chrome.storage.local.set({ day, month, year, rating, comment, lastSavedDate: date.toDateString()})
+    chrome.storage.local.set(storageObject)
         .then(() => {
-            console.log('Data saved:', {rating, comment});
+            console.log('Data saved:', storageObject);
             sendResponse({status: 'success'});
         })
         .catch((error) => {
