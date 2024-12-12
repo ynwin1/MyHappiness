@@ -1,8 +1,22 @@
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     const { rating, comment } = request;
 
+    // Get date
+    const date = new Date();
+    let day = date.getDay();
+    let month = date.getMonth() + 1;  // Months are 0-indexed
+    let year = date.getFullYear();
+
+    let currentTime = date.getHours();
+    if (currentTime >= 0 && currentTime < 17) {
+        date.setDate(date.getDate() - 1);
+        day = date.getDate();
+        month = date.getMonth() + 1;
+        year = date.getFullYear();
+    }
+
     // Store the rating and comment in Chrome Storage
-    chrome.storage.local.set({ rating, comment })
+    chrome.storage.local.set({ day, month, year, rating, comment})
         .then(() => {
             console.log('Data saved:', {rating, comment});
             sendResponse({status: 'success'});

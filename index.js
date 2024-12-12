@@ -26,12 +26,23 @@ document.addEventListener(
                 return;
             }
 
-            // Send the rating and comment to background script
+            if (comment.length > 100) {
+                alert('Only up to 100 characters allowed');
+                return;
+            }
+
             chrome.runtime.sendMessage({rating, comment}, (response) => {
                 console.log('Message sent', response);
+                alert("You just rated your day! Thank you!");
                 window.close();
             });
         });
+
+        function isNewDay() {
+            const date = new Date();
+            const currentHour = date.getHours();
+            return currentHour >= 17;
+        }
 
         function getSelectedRating() {
             const selectedButton = document.querySelector('.rating-button.selected');

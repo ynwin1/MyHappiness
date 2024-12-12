@@ -3,6 +3,65 @@
 <head>
     <title>My Happiness Measurement</title>
     <meta charset="utf-8">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 20px;
+            align-items: center;
+            justify-content: center;
+        }
+
+        h3 {
+            color: #333;
+        }
+
+        .rating-buttons {
+            margin: 20px 0;
+        }
+
+        .rating-button {
+            font-size: 24px;
+            padding: 10px 20px;
+            border: none;
+            background-color: #fff;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .rating-button:hover {
+            transform: scale(1.1);
+            background-color: #e0e0e0;
+        }
+
+        .rating-button.selected {
+            background-color: #a2d2ff;
+        }
+
+        #comment-box {
+            width: 100%;
+            height: 80px;
+            margin-top: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        #save-button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        #save-button:disabled {
+            background-color: #9e9e9e;
+            cursor: default;
+        }
+    </style>
 </head>
 <body>
     <h3>How was your day?</h3>
@@ -13,7 +72,7 @@
         <button class="rating-button" value="4">😊</button>
         <button class="rating-button" value="5">😁</button>
     </div>
-    <textarea id="comment-box" placeholder="Today's highlights? (optional)"></textarea>
+    <textarea id="comment-box" placeholder="Today's highlights? 100 chars max. (optional)"></textarea>
     <button id="save-button" disabled>Save</button>
     <script src="index.js"></script>
 </body>
