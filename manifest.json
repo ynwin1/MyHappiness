@@ -2,7 +2,7 @@
   "manifest_version": 3,
   "name": "My Happiness Measurement",
   "version": "1.0",
-  "description": "Track your daily mood",
+  "description": "Track your daily happiness",
   "author": "Yan Naing",
   "background": {
     "service_worker": "background.js"
