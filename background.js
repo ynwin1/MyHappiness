@@ -3,7 +3,7 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
 
     // Get date
     const date = new Date();
-    const formattedDate = date.toISOString().split('T')[0];  // 'YYYY-MM-DD'
+    const formattedDate = date.toDateString().split('T')[0];  // 'YYYY-MM-DD'
 
     const data = {
         rating: rating,
