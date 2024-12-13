@@ -39,6 +39,18 @@ document.addEventListener(
                 table.rows[i].cells[0].style.fontWeight = 'bold';
             }
 
+            // pre-fill the table with default ratings for missing cells
+            for (let j = 1; j <= currentMonth; j++) {
+                let numOfDays = daysToFill(j, currentYear, currentMonth, currentDay);
+                for (let i = 1; i < numOfDays; i++) {
+                    table.rows[i].cells[j].textContent = selectEmoji(0);
+                    // table.rows[i].cells[j].style.backgroundColor = selectColor(0);
+                    table.rows[i].cells[j].title = months[j] + " " + i + ": " + "I was so busy or so lazy, I forgot if I was happy or sad!";
+                    ratingsCount[0] += 1;
+                }
+            }
+
+            // fill the table with ratings from storage
             Object.keys(items).forEach(item => {
                 if (item.startsWith("rating_" + currentYear.toString())) {
                     const date = new Date(item.substring(7));
@@ -61,17 +73,7 @@ document.addEventListener(
                         }
                     }
                 }
-            })
-
-            for (let j = 1; j <= currentMonth; j++) {
-                let numOfDays = daysToFill(j, currentYear, currentMonth, currentDay);
-                for (let i = 1; i < numOfDays; i++) {
-                    table.rows[i].cells[j].textContent = selectEmoji(0);
-                    // table.rows[i].cells[j].style.backgroundColor = selectColor(0);
-                    table.rows[i].cells[j].title = months[j] + " " + i + ": " + "I was so busy or so lazy, I forgot if I was happy or sad!";
-                    ratingsCount[0] += 1;
-                }
-            }
+            });
 
             // create summary at the top
             const summaryDataDiv = document.querySelector('.summary-data');
