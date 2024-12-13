@@ -34,13 +34,16 @@ document.addEventListener(
                     const month = date.getMonth();
                     const day = date.getDate();
                     const rating = items[item].rating;
+                    const comment = items[item].comment;
 
                     const emoji = selectEmoji(rating);
                     const cellColor = selectColor(rating);
 
                     if (table.rows[day] && table.rows[day].cells[month]) {
-                        table.rows[day + 1].cells[month + 1].textContent = emoji;
-                        table.rows[day + 1].cells[month + 1].style.backgroundColor = cellColor;
+                        const cell = table.rows[day + 1].cells[month + 1];
+                        cell.textContent = emoji;
+                        cell.style.backgroundColor = cellColor;
+                        cell.title = comment;
                     }
                 }
             })

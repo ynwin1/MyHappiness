@@ -1,5 +1,5 @@
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
-    const { rating } = request;
+    const { rating, comment } = request;
 
     function toYYYDDMM() {
         const date = new Date();
@@ -14,7 +14,8 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     const formattedDate = toYYYDDMM();  // 'YYYY-MM-DD'
 
     const data = {
-        rating: rating
+        rating: rating,
+        comment: comment,
     };
 
     const key = `rating_${formattedDate}`;

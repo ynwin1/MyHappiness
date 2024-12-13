@@ -2,6 +2,7 @@ document.addEventListener(
     "DOMContentLoaded",
     () => {
         const ratingButtons = document.querySelectorAll('.rating-button');
+        const commentBox = document.getElementById("comment-box");
         const saveButton = document.getElementById("save-button");
 
         // Add selection mechanism for rating buttons
@@ -17,6 +18,7 @@ document.addEventListener(
 
         saveButton.addEventListener('click', () => {
             const rating = getSelectedRating();
+            const comment = commentBox.value.trim();
 
             // Validate rating
             if (!rating) {
@@ -24,7 +26,12 @@ document.addEventListener(
                 return;
             }
 
-            chrome.runtime.sendMessage({rating}, (response) => {
+            if (comment.length > 200) {
+                alert('Only up to 200 characters allowed');
+                return;
+            }
+
+            chrome.runtime.sendMessage({rating, comment}, (response) => {
                 console.log('Message sent', response);
                 alert(selectMessage(rating));
                 window.close();
