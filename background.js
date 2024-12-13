@@ -13,10 +13,11 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     }
     const formattedDate = toYYYDDMM();  // 'YYYY-MM-DD'
 
+    // set comment only if it's not empty: retains previous non-empty comment
     const data = {
         rating: rating,
-        comment: comment,
-    };
+        comment: comment
+    }
 
     const key = `rating_${formattedDate}`;
     let storageObject = {};
