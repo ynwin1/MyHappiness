@@ -12,6 +12,8 @@ document.addEventListener(
             // add year to the title
             title.textContent += currentYear;
 
+            const ratingsCount = new Array(6).fill(0);
+
             const dayRows = 32;
             const monthCols = 13;
 
@@ -48,6 +50,8 @@ document.addEventListener(
                     const emoji = selectEmoji(rating);
                     const cellColor = selectColor(rating);
 
+                    ratingsCount[rating] += 1;
+
                     if (table.rows[day] && table.rows[day].cells[month]) {
                         const cell = table.rows[day + 1].cells[month + 1];
                         cell.textContent = emoji;
@@ -66,11 +70,38 @@ document.addEventListener(
                 }
                 for (let i = 1; i < daysToFill; i++) {
                     table.rows[i].cells[j].textContent = selectEmoji(0);
-                    table.rows[i].cells[j].style.backgroundColor = selectColor(0);
+                    // table.rows[i].cells[j].style.backgroundColor = selectColor(0);
                     table.rows[i].cells[j].title = "I was so busy or so lazy, I forgot if I was happy or sad!";
+                    ratingsCount[0] += 1;
                 }
             }
+
+            // create summary at the top
+            const summaryDataDiv = document.querySelector('.summary-data');
+            for (let i = 0; i < ratingsCount.length; i++) {
+                const ratingCount = ratingsCount[i];
+                const prefixString = getSummaryPrefixString(i.toString());
+                const dataString = prefixString + ratingCount;
+                addSummaryData(summaryDataDiv, dataString);
+            }
         })
+
+        function addSummaryData(div, content) {
+            const summaryElm = document.createElement('h3');
+            summaryElm.textContent = content;
+            div.appendChild(summaryElm);
+        }
+
+        function getSummaryPrefixString(index) {
+            switch(index) {
+                case "1": return '😭 (Very Sad) - ';
+                case "2": return '😢 (Sad) - ';
+                case "3": return '😐 (OK) - ';
+                case "4": return '😊 (Happy) - ';
+                case "5": return '😁 (Very Happy) - ';
+                default: return '🤔 (IDK) - ';
+            }
+        }
 
         function selectColor(rating) {
             switch (rating) {
