@@ -26,8 +26,8 @@ document.addEventListener(
                 return;
             }
 
-            if (comment.length > 200) {
-                alert('Only up to 200 characters allowed');
+            if (comment.length > 100) {
+                alert('Only up to 100 characters allowed');
                 return;
             }
 

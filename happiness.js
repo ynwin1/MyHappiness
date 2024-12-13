@@ -10,7 +10,7 @@ document.addEventListener(
             const currentDay = currentDate.getDate();
 
             // add year to the title
-            title.textContent += currentYear;
+            title.textContent += currentYear + " 🤗";
 
             const ratingsCount = new Array(6).fill(0);
 
@@ -56,22 +56,19 @@ document.addEventListener(
                         const cell = table.rows[day + 1].cells[month + 1];
                         cell.textContent = emoji;
                         cell.style.backgroundColor = cellColor;
-                        cell.title = comment;
+                        if (comment != null && comment != "") {
+                            cell.title = months[month + 1] + " " + (day + 1) + ": " + comment;
+                        }
                     }
                 }
             })
 
             for (let j = 1; j <= currentMonth; j++) {
-                let daysToFill;
-                if (j == currentMonth) {
-                    daysToFill = currentDay;
-                } else {
-                    daysToFill = dayRows;
-                }
-                for (let i = 1; i < daysToFill; i++) {
+                let numOfDays = daysToFill(j, currentYear, currentMonth, currentDay);
+                for (let i = 1; i < numOfDays; i++) {
                     table.rows[i].cells[j].textContent = selectEmoji(0);
                     // table.rows[i].cells[j].style.backgroundColor = selectColor(0);
-                    table.rows[i].cells[j].title = "I was so busy or so lazy, I forgot if I was happy or sad!";
+                    table.rows[i].cells[j].title = months[j] + " " + i + ": " + "I was so busy or so lazy, I forgot if I was happy or sad!";
                     ratingsCount[0] += 1;
                 }
             }
@@ -84,7 +81,28 @@ document.addEventListener(
                 const dataString = prefixString + ratingCount;
                 addSummaryData(summaryDataDiv, dataString);
             }
-        })
+        });
+
+        function daysToFill(j, currentYear, currentMonth, currentDay) {
+            let days = 0;
+            // 30 days (Sept, Apr, Jun, Nov)
+            if (j == 9 || j == 4 || j == 6 || j == 11) {
+                days = 30 + 1; // + 1 because index starts from 1
+            } else if (j == 2) {
+                // check leap year
+                if (currentYear % 4 == 0) {
+                    // leap year
+                    days = 29 + 1;
+                } else {
+                    days = 28 + 1;
+                }
+            } else if (j == currentMonth) {
+                days = currentDay;
+            } else {
+                days = 31 + 1;
+            }
+            return days;
+        }
 
         function addSummaryData(div, content) {
             const summaryElm = document.createElement('h3');
