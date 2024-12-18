@@ -6,8 +6,6 @@ document.addEventListener(
             const title = document.getElementById("title-str");
             const currentDate = new Date();
             const currentYear = currentDate.getFullYear();
-            const currentMonth = currentDate.getMonth() + 1;
-            const currentDay = currentDate.getDate();
 
             // add year to the title
             title.textContent += currentYear + " 🤗";
@@ -39,17 +37,6 @@ document.addEventListener(
                 table.rows[i].cells[0].style.fontWeight = 'bold';
             }
 
-            // pre-fill the table with default ratings for missing cells
-            for (let j = 1; j <= currentMonth; j++) {
-                let numOfDays = daysToFill(j, currentYear, currentMonth, currentDay);
-                for (let i = 1; i < numOfDays; i++) {
-                    table.rows[i].cells[j].textContent = selectEmoji(0);
-                    // table.rows[i].cells[j].style.backgroundColor = selectColor(0);
-                    table.rows[i].cells[j].title = months[j] + " " + i + ": " + "I was so busy or so lazy, I forgot if I was happy or sad!";
-                    ratingsCount[0] += 1;
-                }
-            }
-
             // fill the table with ratings from storage
             Object.keys(items).forEach(item => {
                 if (item.startsWith("rating_" + currentYear.toString())) {
@@ -77,7 +64,7 @@ document.addEventListener(
 
             // create summary at the top
             const summaryDataDiv = document.querySelector('.summary-data');
-            for (let i = 0; i < ratingsCount.length; i++) {
+            for (let i = 1; i < ratingsCount.length; i++) {
                 const ratingCount = ratingsCount[i];
                 const prefixString = getSummaryPrefixString(i.toString());
                 const dataString = prefixString + ratingCount;
@@ -85,26 +72,26 @@ document.addEventListener(
             }
         });
 
-        function daysToFill(j, currentYear, currentMonth, currentDay) {
-            let days = 0;
-            // 30 days (Sept, Apr, Jun, Nov)
-            if (j == 9 || j == 4 || j == 6 || j == 11) {
-                days = 30 + 1; // + 1 because index starts from 1
-            } else if (j == 2) {
-                // check leap year
-                if (currentYear % 4 == 0) {
-                    // leap year
-                    days = 29 + 1;
-                } else {
-                    days = 28 + 1;
-                }
-            } else if (j == currentMonth) {
-                days = currentDay;
-            } else {
-                days = 31 + 1;
-            }
-            return days;
-        }
+        // function daysToFill(j, currentYear, currentMonth, currentDay) {
+        //     let days = 0;
+        //     // 30 days (Sept, Apr, Jun, Nov)
+        //     if (j == 9 || j == 4 || j == 6 || j == 11) {
+        //         days = 30 + 1; // + 1 because index starts from 1
+        //     } else if (j == 2) {
+        //         // check leap year
+        //         if (currentYear % 4 == 0) {
+        //             // leap year
+        //             days = 29 + 1;
+        //         } else {
+        //             days = 28 + 1;
+        //         }
+        //     } else if (j == currentMonth) {
+        //         days = currentDay;
+        //     } else {
+        //         days = 31 + 1;
+        //     }
+        //     return days;
+        // }
 
         function addSummaryData(div, content) {
             const summaryElm = document.createElement('h3');
