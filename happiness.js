@@ -39,8 +39,12 @@ document.addEventListener(
 
             // fill the table with ratings from storage
             Object.keys(items).forEach(item => {
-                if (item.startsWith("rating_" + currentYear.toString())) {
+                if (item.startsWith("rating_" + currentYear.toString()) && item.length > 7) {
                     const date = new Date(item.substring(7));
+                    // check if date is valid
+                    if (isNaN(date.getTime())) {
+                        return;
+                    }
                     const month = date.getMonth();
                     const day = date.getDate();
                     const rating = items[item].rating;
