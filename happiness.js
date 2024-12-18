@@ -101,12 +101,12 @@ document.addEventListener(
 
         function getSummaryPrefixString(index) {
             switch(index) {
-                case "1": return '😭 (Very Sad) - ';
-                case "2": return '😢 (Sad) - ';
-                case "3": return '😐 (OK) - ';
-                case "4": return '😊 (Happy) - ';
-                case "5": return '😁 (Very Happy) - ';
-                default: return '🤔 (IDK) - ';
+                case "1": return '😭 (Very Sad) = ';
+                case "2": return '😢 (Sad) = ';
+                case "3": return '😐 (OK) = ';
+                case "4": return '😊 (Happy) = ';
+                case "5": return '😁 (Very Happy) = ';
+                default: return '🤔 (IDK) = ';
             }
         }
 
