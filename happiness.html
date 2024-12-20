@@ -29,6 +29,14 @@
             height: 5px;
         }
 
+        .header-top {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-around;
+            align-items: center;
+            width: 100vw;
+        }
+
         .summary-data {
             display: flex;
             flex-direction: row;
@@ -36,10 +44,31 @@
             align-items: center;
             width: 100vw;
         }
+
+        .jump-year {
+            display: inline-block;
+            outline: 0;
+            cursor: pointer;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px 0 rgb(213 217 217 / 50%);
+            background: #FFD814;
+            border: 1px solid #FCD200;
+            font-size: 11px;
+            height: 22px;
+            padding: 0 6px;
+            text-align: center;
+            font-weight: 500;
+            color: #0F1111;
+        }
+
     </style>
 </head>
 <body>
-    <h1 id="title-str">My Happiness in </h1>
+    <div class="header-top">
+        <button class="jump-year" id="last-year"><span>&#8592;</span></button>
+        <h1 id="title-str"></h1>
+        <button class="jump-year" id="next-year" disabled=true><span>&#8594;</span></button>
+    </div>
     <div class="summary-data"></div>
     <table id="happinessTable">
     <!--Data handled by script-->
