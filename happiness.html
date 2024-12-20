@@ -19,14 +19,46 @@
         table {
             width: 90%;
             border-collapse: collapse;
+            margin: 20px auto;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            background-color: #1e1e1e;
+            border-radius: 8px;
+            overflow: hidden;
         }
 
         td, th {
-            border: 1px solid #ddd;
+            border: 1px solid #444;
             text-align: center;
-            padding: 5px;
-            width: 5px;
-            height: 5px;
+            padding: 8px 12px;
+            font-size: 14px;
+            color: #eaeaea;
+            transition: background-color 0.3s ease;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        th {
+            background-color: #333;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        tr:nth-child(even) {
+            background-color: #2b2b2b;
+        }
+
+        td:hover {
+            background-color: #555;
+            color: #fff;
+            cursor: pointer;
+        }
+
+        /* Add a subtle border radius to the entire table */
+        table {
+            border-radius: 10px;
+            overflow: hidden;
         }
 
         .header-top {

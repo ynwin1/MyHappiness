@@ -1,6 +1,10 @@
 document.addEventListener(
     "DOMContentLoaded",
     () => {
+        const months = ["", "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+        const table = document.getElementById("happinessTable");
+        initializeTable(table, months);
+
         let currentYear = new Date().getFullYear();
 
         renderYear(currentYear);
@@ -17,7 +21,7 @@ document.addEventListener(
                 nextButton.disabled = false;
             }
 
-            if (currentYear == new Date().getFullYear() - 2) {
+            if (currentYear === new Date().getFullYear() - 2) {
                 prevButton.disabled = true;
             }
         });
@@ -34,27 +38,21 @@ document.addEventListener(
                 prevButton.disabled = false;
             }
 
-            if (currentYear == new Date().getFullYear()) {
+            if (currentYear === new Date().getFullYear()) {
                 nextButton.disabled = true;
             }
         });
 
         function renderYear(currentYear) {
-            const table = document.getElementById("happinessTable");
             const title = document.getElementById("title-str");
             const summaryDataDiv = document.querySelector('.summary-data');
-            const months = ["", "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 
-            table.style.visibility = "hidden";
-
-            // add year to the title
+            // init title text
             title.textContent = "My Happiness in " + currentYear + " 🤗";
 
-            // clear the table
-            table.innerHTML = "";
+            // clear table contents
+            clearTableContents(table);
             summaryDataDiv.innerHTML = "";
-
-            initializeTable(table, months);
 
             chrome.storage.local.get(null, function(items) {
                 const ratingsCount = new Array(6).fill(0);
@@ -81,7 +79,7 @@ document.addEventListener(
                             const cell = table.rows[day + 1].cells[month + 1];
                             cell.textContent = emoji;
                             cell.style.backgroundColor = cellColor;
-                            if (comment != null && comment != "") {
+                            if (comment != null && comment !== "") {
                                 cell.title = months[month + 1] + " " + (day + 1) + ": " + comment;
                             }
                         }
@@ -95,8 +93,6 @@ document.addEventListener(
                     const dataString = prefixString + ratingCount;
                     addSummaryData(summaryDataDiv, dataString);
                 }
-
-                table.style.visibility = "visible";
             });
         }
 
@@ -112,7 +108,6 @@ document.addEventListener(
             }
 
             // Months header
-
             for (let j = 1; j < monthCols; j++) {
                 table.rows[0].cells[j].textContent = months[j];
                 table.rows[0].cells[j].style.fontWeight = "bold";
@@ -122,6 +117,17 @@ document.addEventListener(
             for (let i = 1; i < dayRows; i++) {
                 table.rows[i].cells[0].textContent = i.toString();
                 table.rows[i].cells[0].style.fontWeight = "bold";
+            }
+        }
+
+        function clearTableContents(table) {
+            for (let i = 1; i < table.rows.length; i++) {
+                for (let j = 1; j < table.rows[i].cells.length; j++) {
+                    const cell = table.rows[i].cells[j];
+                    cell.textContent = "";
+                    cell.style.backgroundColor = "";
+                    cell.title = "";
+                }
             }
         }
 
