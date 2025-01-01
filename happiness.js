@@ -6,7 +6,7 @@ document.addEventListener(
         initializeTable(table, months);
 
         let currentYear = new Date().getFullYear();
-
+        console.log("current year: " + currentYear);
         renderYear(currentYear);
 
         const prevButton = document.getElementById("last-year");
@@ -60,13 +60,16 @@ document.addEventListener(
                 // fill the table with ratings from storage
                 Object.keys(items).forEach(item => {
                     if (item.startsWith("rating_" + currentYear.toString()) && item.length > 7) {
-                        const date = new Date(item.substring(7));
-                        // check if date is valid
-                        if (isNaN(date.getTime())) {
-                            return;
+                        let monthString = item.substring(13, 15);
+                        if (monthString.startsWith("0")) {
+                            monthString = monthString.substring(1);
                         }
-                        const month = date.getMonth();
-                        const day = date.getDate();
+                        const month = parseInt(monthString) - 1;
+                        let dayString = item.substring(16, 18);
+                        if (dayString.startsWith("0")) {
+                            dayString = dayString.substring(1);
+                        }
+                        const day = parseInt(dayString);
                         const rating = items[item].rating;
                         const comment = items[item].comment;
 
@@ -75,12 +78,12 @@ document.addEventListener(
 
                         ratingsCount[rating] += 1;
 
-                        if (table.rows[day] && table.rows[day].cells[month]) {
-                            const cell = table.rows[day + 1].cells[month + 1];
+                        if (table.rows[day] && table.rows[day].cells[month + 1]) {
+                            const cell = table.rows[day].cells[month + 1];
                             cell.textContent = emoji;
                             cell.style.backgroundColor = cellColor;
                             if (comment != null && comment !== "") {
-                                cell.title = months[month + 1] + " " + (day + 1) + ": " + comment;
+                                cell.title = months[month + 1] + " " + day + ": " + comment;
                             }
                         }
                     }
